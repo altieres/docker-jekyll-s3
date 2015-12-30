@@ -1,4 +1,4 @@
-# Create a docker-compose.yml
+### Create a docker-compose.yml
 
 ```
 jekyll:
@@ -9,15 +9,15 @@ jekyll:
     - "4000:4000"
 ```
 
-# Setup Jekyll
+### Setup Jekyll
 
-## Generate base site
+#### Generate base site
 
 ```
 docker-compose run jekyll jekyll new . -f
 ```
 
-## Run your site locally
+#### Run your site locally
 
 ```
 docker-compose up jekyll
@@ -27,9 +27,9 @@ docker-compose up jekyll
 - Open your browser, pointin to your [docker-machine ip]:4000
 
 
-# Setup AWS S3 website
+### Setup AWS S3 website
 
-## Generate base config
+#### Generate base config
 
 ```
 docker-compose run jekyll s3_website cfg create
@@ -37,13 +37,13 @@ docker-compose run jekyll s3_website cfg create
 
 - Update s3_website.yml with your amazon credentials.
 
-## Create your bucket as your configuration
+#### Create your bucket as your configuration
 
 ```
 docker-compose run jekyll s3_website cfg apply
 ```
 
-## Push your transpiled jekyll site whenever you need
+#### Push your transpiled jekyll site whenever you need
 
 ```
 docker-compose run jekyll s3_website push
