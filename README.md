@@ -1,3 +1,7 @@
+Contains jekyll 3.0.1 and s3_website 2.12.2
+
+To allow jekyll watch, filesystem notifications are visible inside the container via watcher.rb script.
+
 ### Create a docker-compose.yml
 
 ```
@@ -37,7 +41,7 @@ docker-compose run jekyll s3_website cfg create
 
 - Update s3_website.yml with your amazon credentials.
 
-#### Create your bucket as your configuration
+#### Create your bucket upon your configuration
 
 ```
 docker-compose run jekyll s3_website cfg apply

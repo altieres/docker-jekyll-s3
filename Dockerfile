@@ -25,20 +25,26 @@ RUN set -x \
 RUN /var/lib/dpkg/info/ca-certificates-java.postinst configure
 
 
-## Jekyll
+## Watching inside the container
+
+RUN apt-get update && apt-get install -y rsync && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /usr/src/app/site
+RUN mkdir /usr/src/app/mirror
 WORKDIR /usr/src/app
+
+COPY run.sh /usr/src/app/
+COPY watcher.rb /usr/src/app/
+
+
+## Jekyll
 
 COPY Gemfile /usr/src/app/
 COPY Gemfile.lock /usr/src/app/
 RUN bundle install
 
-WORKDIR /usr/src/app/site
-
 # deve baixar o jar depois de instalar a gem
 ADD https://github.com/laurilehmijoki/s3_website/releases/download/v2.12.2/s3_website.jar /usr/local/bundle/gems/s3_website-2.12.2/s3_website-2.12.2.jar
 
-CMD ["jekyll", "serve", "--host", "0.0.0.0"]
-
+CMD ["./run.sh"]
 EXPOSE 4000
