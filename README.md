@@ -5,12 +5,17 @@ To allow jekyll watch, filesystem notifications are visible inside the container
 ### Create a docker-compose.yml
 
 ```
-jekyll:
+jekyll: &base
   image: altieres/docker-jekyll-s3
   volumes:
     - .:/usr/src/app/site
   ports:
     - "4000:4000"
+
+s3:
+  <<: *base
+  working_dir: /usr/src/app/site
+  command: bash -c 'jekyll build; s3_website push'
 ```
 
 ### Setup Jekyll
@@ -36,7 +41,7 @@ docker-compose up jekyll
 #### Generate base config
 
 ```
-docker-compose run jekyll s3_website cfg create
+docker-compose run s3 s3_website cfg create
 ```
 
 - Update s3_website.yml with your amazon credentials.
@@ -44,11 +49,11 @@ docker-compose run jekyll s3_website cfg create
 #### Create your bucket upon your configuration
 
 ```
-docker-compose run jekyll s3_website cfg apply
+docker-compose run s3 s3_website cfg apply
 ```
 
 #### Push your transpiled jekyll site whenever you need
 
 ```
-docker-compose run jekyll s3_website push
+docker-compose run s3
 ```
