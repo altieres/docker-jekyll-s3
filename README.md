@@ -12,7 +12,7 @@ jekyll: &base
   ports:
     - "4000:4000"
 
-s3:
+site:
   <<: *base
   working_dir: /usr/src/app/site
   command: bash -c 'jekyll build; s3_website push'
@@ -23,7 +23,7 @@ s3:
 #### Generate base site
 
 ```
-docker-compose run jekyll jekyll new . -f
+docker-compose run site jekyll new . -f
 ```
 
 #### Run your site locally
@@ -41,7 +41,7 @@ docker-compose up jekyll
 #### Generate base config
 
 ```
-docker-compose run s3 s3_website cfg create
+docker-compose run site s3_website cfg create
 ```
 
 - Update s3_website.yml with your amazon credentials.
@@ -49,11 +49,11 @@ docker-compose run s3 s3_website cfg create
 #### Create your bucket upon your configuration
 
 ```
-docker-compose run s3 s3_website cfg apply
+docker-compose run site s3_website cfg apply
 ```
 
 #### Push your transpiled jekyll site whenever you need
 
 ```
-docker-compose run s3
+docker-compose run site
 ```
